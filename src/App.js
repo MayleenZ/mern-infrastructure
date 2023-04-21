@@ -4,15 +4,16 @@ import AuthPage from "./pages/AuthPage";
 import NewOrderPage from "./pages/NewOrderPage";
 import OrderHistoryPage from "./pages/OrderHistoryPage";
 import NavBar from "./components/NavBar";
+import { getUser } from "./utils/user-services";
 import "./App.css";
 
 function App() {
-  const [user, SetUser] = useState(null);
+  const [user, setUser] = useState(getUser());
   return (
     <main className="App">
       {user ? (
         <>
-          <NavBar />
+          <NavBar user={user} setUser={setUser}/>
           <Routes>
             <Route path="/orders/new" element={<NewOrderPage />} />
             <Route path="/orders" element={<OrderHistoryPage />} />
@@ -20,7 +21,7 @@ function App() {
         </>
         // these truthy values display only when there is a logged in user
       ) : (
-        <AuthPage />
+        <AuthPage setUser={setUser}/>
         // user is not logged in
       )}
     </main>

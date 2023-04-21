@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { signUp } from "../utils/user-services";
 
-function SignUpForm() {
+function SignUpForm({setUser}) {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -24,7 +24,8 @@ function SignUpForm() {
       };
       //return a token (yay) with the userData
       const user = await signUp(userData);
-      console.log(user);
+      setUser(user)
+      //We passed down setUser all the way from app.js -> auth page -> sign up form and used the setter function to now include the updated user information setUser(user) (full circle moment)
     } catch (error) {
       setFormData({ ...formData, error: "Sign up failed - Try Again! " });
     }
