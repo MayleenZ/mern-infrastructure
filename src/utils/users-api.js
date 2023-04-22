@@ -17,6 +17,23 @@ export async function signUp(userData) {
   }
 }
 
+//* Log In 
+
+export async function logIn(credentials) {
+  const res = await fetch(BASE_URL, {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(credentials),
+    //we make the userData into a string using JSON.stringify()
+  });
+
+  if (res.ok) {
+    return res.json(); //if reuqest is ok (200) we will get a JSON Web Token , parsed to a JS object and expecting the JWT token 
+  } else {
+    throw new Error("Invalid Login");
+  }
+}
+
 //This function creates a POST request to an API endpoint (route) to create a new user account. 
 //Fnction takes single argument userData which is object containing users info
 //function uses fetchAPI to send POST request to endpoint specified in BASE_URL 

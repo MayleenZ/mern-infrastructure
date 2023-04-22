@@ -2,17 +2,6 @@ const User = require("../../models/user");
 const jwt = require('jsonwebtoken')
 
 async function create(req, res) {
-  // console.log(['From POST handler'], req.body);
-  // res.json({
-  //     user: {
-  //         name: req.body.name,
-  //         email: req.body.email
-  //     }
-  // The controller function extracts data from the request object (name and email) and uses it to create a new user object
-  //It then sends a JSON response containing newly created user back to client
-  //This handles incoming POST requests
-  // })
-
   try {
     const user = await User.create(req.body);
     console.log(user);
@@ -24,6 +13,24 @@ async function create(req, res) {
     res.status(400).json(error);
   }
 }
+
+
+async function login(req,res) {
+  try {
+    const loggedUser = await login(req.body);
+    console.log(loggedUser);
+    const token = createJWT(loggedUser)
+    res.json(token)
+    
+  } catch (error) {
+    res.status(400).json(error);
+  }
+}
+
+
+
+
+
 
 function createJWT(user) {
     return jwt.sign(
@@ -37,7 +44,7 @@ function createJWT(user) {
 
 
 module.exports = {
-  create,
+  create, login
 };
 
 //We are separating it for scalability and organization.

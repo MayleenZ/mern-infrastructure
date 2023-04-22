@@ -28,6 +28,8 @@ app.use(express.static(path.join(__dirname, "build")));
 //* === Routes
 app.use('/api/users', require('./routes/api/users'))
 
+app.use('/api/users/login', require('./routes/api/users'))
+
 //* === Catch All Route
 //This method is useful for sending files
 //look for file called build and index.html

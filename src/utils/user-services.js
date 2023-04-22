@@ -4,7 +4,7 @@
 
 import * as usersApi from "./users-api";
 
-//* get token function
+//* Get Token
 export function getToken() {
   // getItem returns null if there's no string
   const token = localStorage.getItem("token");
@@ -20,12 +20,14 @@ export function getToken() {
   return token;
 }
 
+//* Get User 
 export function getUser() {
   const token = getToken();
   // If there's a token, return the user in the payload, otherwise return null
   return token ? JSON.parse(atob(token.split(".")[1])).user : null;
 }
 
+//* Sign Up
 export async function signUp(userData) {
   // use the SignUp users-api function
   console.log("[From signUp function]", userData);
@@ -40,5 +42,10 @@ export function logOut() {
   localStorage.removeItem("token");
 }
 
-//* Loging
-export async function logIn() {}
+//* Log In
+export async function logIn(credentials) {
+  console.log(credentials);
+  const token = await usersApi.logIn(credentials);
+  localStorage.setItem("token", token);
+  return getUser()
+}
