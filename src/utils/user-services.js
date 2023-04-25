@@ -51,3 +51,10 @@ export async function login(credentials) {
   localStorage.setItem("token", token);
   return getUser();
 }
+
+//* Check Token 
+export async function checkToken(){
+  return usersApi.checkToken().then(dateStr => new Date(dateStr))
+  //backend is going to return after the .then and create a new Data and passes the datestr that the server is going to send back to us
+  //checkToken returns a string but we are making it a data object 
+}

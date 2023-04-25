@@ -16,9 +16,9 @@ async function create(req, res) {
 
 async function login(req, res) {
   try {
-    //find the user by email 
+    //find the user by email
     const user = await User.findOne({ email: req.body.email });
-    console.log('[user found]:', user);
+    console.log("[user found]:", user);
     if (!user) throw new Error();
 
     //if user exists compare password
@@ -26,15 +26,22 @@ async function login(req, res) {
     if (!matched) throw new Error();
 
     //if password is a match, create a token
-    const token = createJWT(user)
+    const token = createJWT(user);
     console.log(token);
     res.json(token);
-
   } catch {
     res.status(400).json("Check Credentials");
   }
 }
 //if user exists and passwords match we create a jwt token using createJWT function and return it to client
+
+async function checkToken(req, res) {
+  console.log(req.user);
+  console.log(req.exp);
+  res.json(req.exp)
+  //these two are being created in our middleware 
+  //middleware runs between req and response cycle
+}
 
 function createJWT(user) {
   return jwt.sign(
@@ -49,6 +56,7 @@ function createJWT(user) {
 module.exports = {
   create,
   login,
+  checkToken,
 };
 
 //We are separating it for scalability and organization.
