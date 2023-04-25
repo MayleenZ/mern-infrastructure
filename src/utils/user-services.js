@@ -10,8 +10,9 @@ export function getToken() {
   const token = localStorage.getItem("token");
   if (!token) return null;
   // Obtain the payload of the token
-  const payload = JSON.parse(atob(token.split(".")[1]));
-  // A JWT's exp is expressed in seconds, not milliseconds, so convert
+  const payload = JSON.parse(window.atob(token.split(".")[1]));
+  console.log(payload);
+  // A JWT's exp is expressed in seconds, not milliseconds, so convert with the /1000
   if (payload.exp < Date.now() / 1000) {
     // Token has expired - remove it from localStorage
     localStorage.removeItem("token");
@@ -20,11 +21,12 @@ export function getToken() {
   return token;
 }
 
-//* Get User 
+//* Get User
 export function getUser() {
   const token = getToken();
+  console.log(token);
   // If there's a token, return the user in the payload, otherwise return null
-  return token ? JSON.parse(atob(token.split(".")[1])).user : null;
+  return token ? JSON.parse(window.atob(token.split(".")[1])).user : null;
 }
 
 //* Sign Up
@@ -43,9 +45,9 @@ export function logOut() {
 }
 
 //* Log In
-export async function logIn(credentials) {
+export async function login(credentials) {
   console.log(credentials);
-  const token = await usersApi.logIn(credentials);
+  const token = await usersApi.login(credentials);
   localStorage.setItem("token", token);
-  return getUser()
+  return getUser();
 }

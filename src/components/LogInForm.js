@@ -1,6 +1,6 @@
 // LoginForm.jsx
 import { useState } from "react";
-import { logIn } from "../utils/user-services";
+import { login } from "../utils/user-services";
 
 export default function LoginForm({ setUser }) {
   const [credentials, setCredentials] = useState({
@@ -21,7 +21,7 @@ export default function LoginForm({ setUser }) {
       // The promise returned by the signUp service method
       // will resolve to the user object included in the
       // payload of the JSON Web Token (JWT)
-      const user = await logIn(credentials);
+      const user = await login(credentials);
       setUser(user);
     } catch {
       setError("Log In Failed - Try Again");
