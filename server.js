@@ -5,6 +5,7 @@ const path = require("path");
 const favicon = require("serve-favicon");
 const logger = require("morgan");
 const PORT = process.env.PORT || 3001;
+const ensureLoggedIn = require('./config/ensureLoggedIn')
 //port number being passed through environment variable
 
 const app = express();
@@ -36,7 +37,8 @@ app.use(require('./config/checkToken'))
 //any incoming http request for the 'api/users' path will be handled by the middleware function that is exported from the 'routes/api/users module
 app.use('/api/users', require('./routes/api/users'))
 
-
+app.use('/api/items', ensureLoggedIn, require('./routes/api/items'));
+app.use('/api/orders', ensureLoggedIn, require('./routes/api/orders'));
 
 //we mount a middleware function that will handle http requests to the path '/api/user/login'. 
 //the middleware function is created by calling require() to load the module defined in './routes/api/users', which exports a function that handles requests to this path 

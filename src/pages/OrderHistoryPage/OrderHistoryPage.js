@@ -1,4 +1,4 @@
-import {checkToken} from "../utils/user-services"
+import {checkToken} from "../../utils/user-services"
 
 function OrderHistoryPage(){
     const  handleCheckToken = async ( ) => {
