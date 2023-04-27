@@ -1,5 +1,5 @@
 import styles from './UserLogOut.module.css';
-import { logOut } from '../../utilities/users-service';
+import { logOut } from '../../utils/user-services';
 
 export default function UserLogOut({ user, setUser }) {
 function handleLogOut() {
